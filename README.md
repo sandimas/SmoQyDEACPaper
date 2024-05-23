@@ -1,5 +1,6 @@
 # Package Documentation and Code
 [`SmoQyDEAC.jl Documentation`](https://smoqysuite.github.io/SmoQyDEAC.jl/stable/): Documentation for running SmoQyDEAC.jl
+
 [`SmoQyDEAC.jl code`](https://github.com/SmoQySuite/SmoQyDEAC.jl): Code repository for SmoQyDEAC.jl
 
 # SmoQyDEAC.jl Paper Scripts
