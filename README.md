@@ -1,5 +1,9 @@
+# Package Documentation and Code
+[`SmoQyDEAC.jl Documentation`](https://smoqysuite.github.io/SmoQyDEAC.jl/stable/): Documentation for running SmoQyDEAC.jl
+[`SmoQyDEAC.jl code`](https://github.com/SmoQySuite/SmoQyDEAC.jl): Code repository for SmoQyDEAC.jl
+
 # SmoQyDEAC.jl Paper Scripts
-Repository of code used to generate plots for SmoQyDEAC.jl's paper [arXiv:TBD](https://arxiv.org/abs/FIXME). This is a reimplementation of the DEAC algorithm developed by Nathan S. Nichols, Paul Sokol, and Adrian Del Maestro [arXiv:2201.04155](https://arxiv.org/abs/2201.04155).
+This is a repository of code used to generate plots for SmoQyDEAC.jl's paper [arXiv:TBD](https://arxiv.org/abs/FIXME). This is a reimplementation of the DEAC algorithm developed by Nathan S. Nichols, Paul Sokol, and Adrian Del Maestro [arXiv:2201.04155](https://arxiv.org/abs/2201.04155).
 
 Other software needed for these scripts:
 - [`ACFlow`](https://github.com/huangli712/ACFlow): Li Huang's Analytic Continuation package
