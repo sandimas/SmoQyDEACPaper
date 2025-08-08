@@ -1,4 +1,11 @@
-using SynthAC
+try 
+    using SynthAC
+catch
+    using Pkg
+    Pkg.add(url="https://github.com/sandimas/SynthAC.jl.git")
+    using SynthAC
+end
+
 using FileIO
 
 folders = ["01_Gauss_1.0","02_Gauss_0.1","03_Gauss_0.01",
@@ -7,9 +14,9 @@ folders = ["01_Gauss_1.0","02_Gauss_0.1","03_Gauss_0.01",
 
 
 for i in 1:size(folders,1)
-    folders[i] = joinpath("distributions",folders[i])
+    
     try
-        mkdir(folders[i])
+        mkpath(folders[i])
     catch
     end
 end

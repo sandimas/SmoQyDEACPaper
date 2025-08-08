@@ -41,5 +41,5 @@ folders = ["01_Gauss_1.0","02_Gauss_0.1","03_Gauss_0.01",
             "07_Gauss_Singular","08_Log_Singular","09_Chaos","10_Chaos_Singular"]
 
 for folder in folders
-    run_mem(joinpath("distributions",folder))
+    run_mem(folder)
 end

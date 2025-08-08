@@ -60,6 +60,6 @@ function sac(folder)
 end
 
 for folder in folders
-    sac(joinpath("distributions",folder))
+    sac(folder)
 end
 

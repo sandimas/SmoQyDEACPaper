@@ -7,7 +7,7 @@ dmrg = load("data/dmrg.jld2")
 
 ks = dmrg["ks"]
 
-f = Figure(resolution=(1600,800),fontsize=50)
+f = Figure(size=(2000,800),fontsize=50)
 ga = f[1,1] = GridLayout()
 maxcol = max(maximum(deac["A"]),maximum(dmrg["A"]) )
 
@@ -36,4 +36,4 @@ text!(ax_deac,0.0,3.3,text=L"\text{\textbf{(b)} DEAC}",color=:white,fontsize=50)
 Label(ga[1,:,Bottom()], L"k", valign = :bottom,padding=(0.0,0.0,0.0,50.0))
 f
 
-save("dmrg.png",f)
+save("deac_vs_dmrg.png",f)

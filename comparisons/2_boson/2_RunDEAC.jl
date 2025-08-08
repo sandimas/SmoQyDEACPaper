@@ -9,12 +9,12 @@ end
 function run_deac(folder)
     n_bin = 100
     n_run = 20
-    dict = load(joinpath("distributions",folder,"true.jld2"))
+    dict = load(joinpath(folder,"true.jld2"))
     G = dict["Gτ"]
     β = dict["β"]
     τs = collect(dict["τs"])
     ωs = collect(LinRange(-10.0,10.0,400))
-    ferm = DEAC_Binned(G,β,τs,ωs,"time_bosonic_symmetric",n_bin,n_run,joinpath(folder,"deac.jld2"),joinpath("distributions",folder))
+    ferm = DEAC_Binned(G,β,τs,ωs,"time_bosonic_symmetric",n_bin,n_run,joinpath(folder,"deac.jld2"),joinpath("distributions",folder,"chk.jld2"))
 end
 
 

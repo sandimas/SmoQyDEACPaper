@@ -8,9 +8,6 @@ if Threads.nthreads() == 1
 end
 
 kpt = 1:32
-beta = 40.0
-
-
 
 ωmin = -10.0
 ωmax = 10.0
@@ -18,26 +15,36 @@ nω = 200
 ωs = collect(LinRange(ωmin,ωmax,nω))
 
 outdir = "data/DEAC/"
-try
-    mkdir(outdir)
-catch
-end
-dict,real,imag,_,_,β = load_from_SmoQyDQMC(simulationfolder=directory,
-                                         correlation="greens",
-                                         space="momentum",
-                                         type="time_displaced",bin=true)
 
-G = real[1,1,:,:,1,1,:,1]
-τs=collect(LinRange(0.0,β,size(G,1)))
+mkpath(outdir)
+
+if isfile("data/dqmc_data.jld2")
+    input_dict = load("data/dqmc_data.jld2")
+    G = input_dict["G"]
+    τs = input_dict["τs"]
+    β = input_dict["β"]
+else
+
+    dict,real,imag,_,_,β = load_from_SmoQyDQMC(
+        simulationfolder=directory,
+        correlation="greens",
+        space="momentum",
+        type="time_displaced",bin=true
+    )
+
+    G = real[1,1,:,:,1,1,:,1]
+    τs=collect(LinRange(0.0,β,size(G,1)))
+    save("data/dqmc_data.jld2",Dict("G"=>G,"τs"=>τs,"β"=>β))
+end
 
 A_tmp = zeros(Float64,size(G,2),size(ωs,1))
 
 for k in kpt
     println("DEAC for k ",k)
-    out = joinpath(outdir,string(kpt)*".jld2")
-    G2 = G[:,k,:]'
-    DEAC_dict = DEAC_Binned(G2,β,τs,ωs,"time_fermionic",100,10,out,directory,number_of_generations=1000000,population_size=12,verbose=true)
-    A_tmp[k,:] = DEAC_dict["A"]
+    out = joinpath(outdir,"$(k).jld2")
+    G2 = Matrix{Float64}(G[:,k,:]')
+    DEAC_dict = DEAC_Binned(G2,β,τs,ωs,"time_fermionic",100,100,out,"chk.jld2",number_of_generations=20_000,population_size=12,verbose=true)
+    A_tmp[k,:] = DEAC_dict["A"][:,end]
 end
 
 A_out = zeros(Float64,size(A_tmp,1)+1,size(ωs,1))

@@ -37,5 +37,5 @@ end
 
 for folder in folders
 
-    maxent(joinpath("distributions/",folder))
+    maxent(folder)
 end

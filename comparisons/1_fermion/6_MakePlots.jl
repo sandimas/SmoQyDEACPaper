@@ -11,7 +11,7 @@ folders = ["01_Gauss_1.0","02_Gauss_0.1","03_Gauss_0.01",
 
 function plots(folder)
     name = folder
-    folder = joinpath("distributions/",folders[1])
+    
     f= Figure(resolution=(1000,750),fontsize=30)
     g = f[1,1] = GridLayout()
     

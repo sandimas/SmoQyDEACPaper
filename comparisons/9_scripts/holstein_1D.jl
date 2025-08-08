@@ -46,7 +46,8 @@ function run_simulation(ARGS)
     # initialize simulation info
     simulation_info = SimulationInfo(
         filepath = ".",                     
-        datafolder_prefix = datafolder_prefix
+        datafolder_prefix = datafolder_prefix,
+        sID=1
     )
 
     # initialize data folder
@@ -81,13 +82,13 @@ function run_simulation(ARGS)
     δG_max = 1e-6
 
     # number of thermalization/burnin updates
-    N_burnin = 2500
+    N_burnin = 1500
 
     # number of simulation updates
     N_updates = 5000
 
     # number of bins/number of time 
-    N_bins = 100
+    N_bins = 500
 
     # bin size
     bin_size = div(N_updates, N_bins)
@@ -338,8 +339,12 @@ function run_simulation(ARGS)
     δθ = zero(typeof(sgndetG))
 
     # perform thermalization/burnin updates
+    println("Beginning burnin")
     for n in 1:N_burnin
 
+        if n % 100 == 0
+            println("Burnin update $(n)/$(N_burnin)")
+        end
 
         # perform reflection update
         (accepted, logdetG, sgndetG) = reflection_update!(
@@ -387,9 +392,10 @@ function run_simulation(ARGS)
     δG = zero(typeof(logdetG))
     δθ = zero(typeof(sgndetG))
 
+    println("Beginning measurements")
     # iterate of measurement bins
     for bin in 1:N_bins
-
+        println("bin $(bin)/$(N_bins)") 
         # iterate over updates per bin
         for n in 1:bin_size
 
@@ -473,55 +479,60 @@ function run_simulation(ARGS)
     process_measurements(simulation_info.datafolder, N_bins, time_displaced = true)
 
     # calculate time-displaced green's function stats in momentum space
-    process_correlation_measurement(
+    correlation_bins_to_csv(
         folder = simulation_info.datafolder,
         correlation = "greens",
         type = "time-displaced",
         space = "momentum",
-        N_bin = 100
+        write_index_key = true
+    )
+    
+    correlation_bins_to_csv(
+        folder = simulation_info.datafolder,
+        correlation = "greens",
+        type = "time-displaced",
+        space = "position",
+        write_index_key = true
     )
 
-    process_correlation_measurement(
+    correlation_bins_to_csv(
         folder = simulation_info.datafolder,
         correlation = "density",
         type = "time-displaced",
         space = "momentum",
-        N_bin = 100
+        write_index_key = true
     )
-
-    process_correlation_measurement(
+    
+    correlation_bins_to_csv(
         folder = simulation_info.datafolder,
         correlation = "pair",
         type = "time-displaced",
         space = "momentum",
-        N_bin = 100
+        write_index_key = true
     )
-
-    process_correlation_measurement(
+        
+    correlation_bins_to_csv(
         folder = simulation_info.datafolder,
         correlation = "spin_z",
         type = "time-displaced",
         space = "momentum",
-        N_bin = 100
+        write_index_key = true
     )
-
-    process_correlation_measurement(
+    
+    correlation_bins_to_csv(
         folder = simulation_info.datafolder,
         correlation = "spin_x",
         type = "time-displaced",
         space = "momentum",
-        N_bin = 100
+        write_index_key = true
     )
 
-    
-
-    # calculate time-displaced phonon green's function stats in momentum space
-    process_correlation_measurement(
+    correlation_bins_to_csv(
         folder = simulation_info.datafolder,
         correlation = "phonon_greens",
         type = "time-displaced",
         space = "momentum",
-        N_bin = 100
+        write_index_key = true
     )
 
     return nothing
